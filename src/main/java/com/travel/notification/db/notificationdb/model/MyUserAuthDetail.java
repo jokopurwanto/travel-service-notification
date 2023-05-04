@@ -1,4 +1,4 @@
-package com.travel.notification.model;
+package com.travel.notification.db.notificationdb.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -7,12 +7,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class MyUserDetail implements UserDetails {
+public class MyUserAuthDetail implements UserDetails {
 
-    private final UserModel mUser;
+    private final UserAuthModel mUser;
 
-    public MyUserDetail(UserModel userModel){
-        this.mUser = userModel;
+    public MyUserAuthDetail(UserAuthModel userAuthModel){
+        this.mUser = userAuthModel;
     }
 
     @Override

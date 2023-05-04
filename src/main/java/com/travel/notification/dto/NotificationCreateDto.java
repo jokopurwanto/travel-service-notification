@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Getter
@@ -15,11 +16,24 @@ import java.sql.Timestamp;
 @Builder
 public class NotificationCreateDto {
 
-    @NotNull(message = "Invalid status: status is NULL")
-    private Boolean status;
+    @NotNull(message = "Invalid idUser: idUser is NULL")
+    private Integer idUser;
 
-    @NotBlank(message = "Invalid total email: Empty email")
-    @NotNull(message = "Invalid total email: email is NULL")
-    private String email;
+    @NotNull(message = "Invalid idOrder: idOrder is NULL")
+    private Integer idOrder;
 
+    @NotNull(message = "Invalid destination: destination is NULL")
+    private String destination;
+
+    @NotNull(message = "Invalid startDate: startDate is NULL")
+    private Date startDate;
+
+    @NotNull(message = "Invalid endDate: endDate is NULL")
+    private Date endDate;
+
+    @NotNull(message = "Invalid totalPerson: totalPerson is NULL")
+    private Integer totalPerson;
+
+    @NotNull(message = "Invalid totalPrice: totalPrice is NULL")
+    private String totalPrice;
 }

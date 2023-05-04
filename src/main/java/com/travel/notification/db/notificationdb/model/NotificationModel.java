@@ -1,4 +1,4 @@
-package com.travel.notification.model;
+package com.travel.notification.db.notificationdb.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,7 +26,7 @@ public class NotificationModel {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "createdAt")
-    private Timestamp cretedAt;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
 
 }

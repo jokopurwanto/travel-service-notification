@@ -1,8 +1,8 @@
 package com.travel.notification.service;
 
-import com.travel.notification.model.MyUserDetail;
-import com.travel.notification.model.UserModel;
-import com.travel.notification.repository.UserRepository;
+import com.travel.notification.db.notificationdb.model.MyUserAuthDetail;
+import com.travel.notification.db.notificationdb.model.UserAuthModel;
+import com.travel.notification.db.notificationdb.repository.UserAuthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,14 +11,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class MyUserDetailService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserAuthRepository userAuthRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserModel user = userRepository.findByUsername(username);
+        UserAuthModel user = userAuthRepository.findByUsername(username);
         if (user == null){
             throw new UsernameNotFoundException("no user found !!!");
         }
-        return new MyUserDetail(user);
+        return new MyUserAuthDetail(user);
     }
 }

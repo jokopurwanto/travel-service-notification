@@ -3,15 +3,12 @@ package com.travel.notification.controller;
 import com.travel.notification.dto.NotificationCreateDto;
 import com.travel.notification.dto.NotificationUpdateDto;
 import com.travel.notification.handler.RespHandler;
-import com.travel.notification.model.NotificationModel;
 import com.travel.notification.service.Imple.NotificationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.*;
 
 @RestController
 @RequestMapping("api")
@@ -43,6 +40,10 @@ public class NotificationController {
         return RespHandler.responseBuilder("sukses, data telah berhasil di-delete",HttpStatus.OK, notificationService.deleteNotification(id));
     }
 
+    @GetMapping("/users")
+    public ResponseEntity<Object> listUserDetails(){
+        return RespHandler.responseBuilder("sukses, berikut list semua data users",HttpStatus.OK, notificationService.getAllUser());
+    }
 
 //    @GetMapping("/notification")
 //    public List<NotificationModel> list(){

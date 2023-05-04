@@ -27,5 +27,5 @@ public class NotificationUpdateDto {
     private String email;
 
     @NotNull(message = "Invalid date: date is NULL")
-    private Timestamp cretedAt;
+    private Timestamp createdAt;
 }

@@ -1,10 +1,10 @@
-package com.travel.notification.model;
+package com.travel.notification.db.notificationdb.model;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tbl_users")
-public class UserModel {
+public class UserAuthModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -22,10 +22,10 @@ public class UserModel {
     @Column(name = "enabled")
     private boolean enabled;
 
-    public UserModel() {
+    public UserAuthModel() {
     }
 
-    public UserModel(int id, String username, String password, String role, boolean enabled) {
+    public UserAuthModel(int id, String username, String password, String role, boolean enabled) {
         this.id = id;
         this.username = username;
         this.password = password;
