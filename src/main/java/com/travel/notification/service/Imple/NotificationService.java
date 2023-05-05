@@ -10,10 +10,12 @@ import com.travel.notification.handler.NotificationNotFoundException;
 import com.travel.notification.db.notificationdb.model.NotificationModel;
 import com.travel.notification.db.notificationdb.repository.NotificationRepository;
 import com.travel.notification.service.INotificationService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -23,6 +25,7 @@ import java.util.Map;
 import java.time.ZonedDateTime;
 
 @Service
+@Transactional
 public class NotificationService implements INotificationService {
 
     @Autowired
@@ -59,7 +62,6 @@ public class NotificationService implements INotificationService {
                     notificationCreateDto.getTotalPerson(),
                     notificationCreateDto.getTotalPrice()));
             //end send email
-
             status = true;
         }
 
@@ -69,26 +71,35 @@ public class NotificationService implements INotificationService {
                 .email(userModel.getEmail())
                 .createdAt(timestamp)
                 .build();
-        NotificationModel notifMdl = notificationRepository.saveAndFlush(notificationModel);
+        return notificationRepository.saveAndFlush(notificationModel);
         //end insert db notification
 
 
         //update db transaction
-        OrderModel orderMdlTmp = orderRepository.findById(notificationCreateDto.getIdOrder()).get();
-        OrderModel orderModel = OrderModel.builder()
-                .id(notificationCreateDto.getIdOrder())
-                .idUser(orderMdlTmp.getIdUser())
-                .idPayment(orderMdlTmp.getIdPayment())
-                .idNotification(notifMdl.getId())
-                .date(orderMdlTmp.getDate())
-                .startDate(orderMdlTmp.getStartDate())
-                .endDate(orderMdlTmp.getEndDate())
-                .totalPerson(orderMdlTmp.getTotalPerson())
-                .build();
-        orderRepository.save(orderModel);
+//        OrderModel orderMdlTmp = orderRepository.findById(notificationCreateDto.getIdOrder()).get();
+//
+//        System.out.println(notificationCreateDto.getIdOrder());
+//        System.out.println(orderMdlTmp.getIdUser());
+//        System.out.println(orderMdlTmp.getIdPayment());
+//        System.out.println(notifMdl.getId());
+//        System.out.println(orderMdlTmp.getDate());
+//        System.out.println(orderMdlTmp.getStartDate());
+//        System.out.println(orderMdlTmp.getEndDate());
+//        System.out.println(orderMdlTmp.getTotalPerson());
+//
+//        OrderModel orderModel = OrderModel.builder()
+//                .id(notificationCreateDto.getIdOrder())
+//                .idUser(orderMdlTmp.getIdUser())
+//                .idPayment(orderMdlTmp.getIdPayment())
+//                .idNotification(notifMdl.getId())
+//                .date(orderMdlTmp.getDate())
+//                .startDate(orderMdlTmp.getStartDate())
+//                .endDate(orderMdlTmp.getEndDate())
+//                .totalPerson(orderMdlTmp.getTotalPerson())
+//                .build();
+//        orderRepository.saveAndFlush(orderModel);
         //end update db transaction
 
-        return notificationModel;
     }
 
     @Override
