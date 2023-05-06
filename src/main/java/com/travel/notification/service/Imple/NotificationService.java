@@ -4,6 +4,7 @@ import com.travel.notification.db.userdb.model.OrderModel;
 import com.travel.notification.db.userdb.model.UserModel;
 import com.travel.notification.db.userdb.repository.OrderRepository;
 import com.travel.notification.db.userdb.repository.UserRepository;
+import com.travel.notification.dto.NotificationBorrowerDto;
 import com.travel.notification.dto.NotificationCreateDto;
 import com.travel.notification.dto.NotificationUpdateDto;
 import com.travel.notification.handler.NotificationNotFoundException;
@@ -170,7 +171,7 @@ public class NotificationService implements INotificationService {
     @Override
     public void sendEmail(String toEmail, String subject, String body) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom("mailspring389@gmail.com");
+        mailMessage.setFrom("nolasputrianti@gmail.com");
         mailMessage.setTo(toEmail);
         mailMessage.setText(body);
         mailMessage.setSubject(subject);
@@ -199,5 +200,45 @@ public class NotificationService implements INotificationService {
                 "Telp : (021) 08123456789";
 
         return contentBody;
+    }
+
+    @Override
+    public String contentBodyEmailBorrower(String username, String totalPayment, String product, Timestamp date) {
+        String contentBody = "Hai "+username+"\r\n" +
+                "Anda baru saja melakukan transaksi menggunakan P2P Lending App.\r\n" +
+                "Berikut ini adalah detail transaksi Anda :\r\n" +
+                "Status\t:\tBerhasil\r\n" +
+                "Product\t:\t"+product+"\n" +
+                "Total Payment\t:\t"+totalPayment+"\r\n" +
+                "Tanggal\t:\t"+date+"\n\n" +
+                "Mohon simpan email ini sebagai referensi transaksi Anda.\n" +
+                "Terima kasih.\n" +
+                "\r\n" +
+                "P2P LENDING APPS\r\n" +
+                "Jl. Slipi Jaya No. 1 Jakarta Barat\r\n" +
+                "Telp : (021) 08123456789";
+
+        return contentBody;
+    }
+
+    @Override
+    public NotificationModel createNotificationBorrower(NotificationBorrowerDto notificationBorrowerDto) {
+        ZonedDateTime now = ZonedDateTime.now();
+        Timestamp timestamp = Timestamp.valueOf(now.toLocalDateTime());
+        Boolean status;
+
+
+        sendEmail(notificationBorrowerDto.getEmail(), "P2P Lending App - Bukti Transaksi", contentBodyEmailBorrower(notificationBorrowerDto.getUsername(),
+                notificationBorrowerDto.getTotalPayment(),
+                notificationBorrowerDto.getProduct(),
+                timestamp));
+
+        //insert db notification
+        NotificationModel notificationModel = NotificationModel.builder()
+                .status(true)
+                .email(notificationBorrowerDto.getEmail())
+                .createdAt(timestamp)
+                .build();
+        return notificationRepository.saveAndFlush(notificationModel);
     }
 }

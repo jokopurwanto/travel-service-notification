@@ -1,5 +1,6 @@
 package com.travel.notification.controller;
 
+import com.travel.notification.dto.NotificationBorrowerDto;
 import com.travel.notification.dto.NotificationCreateDto;
 import com.travel.notification.dto.NotificationUpdateDto;
 import com.travel.notification.handler.RespHandler;
@@ -45,6 +46,10 @@ public class NotificationController {
         return RespHandler.responseBuilder("sukses, berikut list semua data users",HttpStatus.OK, notificationService.getAllUser());
     }
 
+    @PostMapping("/notification/borrower")
+    public ResponseEntity<Object> createCatalogDetails(@RequestBody @Valid NotificationBorrowerDto notificationBorrowerDto){
+        return RespHandler.responseBuilder("sukses, data notification telah berhasil di-simpan",HttpStatus.OK, notificationService.createNotificationBorrower(notificationBorrowerDto));
+    }
 //    @GetMapping("/notification")
 //    public List<NotificationModel> list(){
 //        return notificationService.getAllNotification();

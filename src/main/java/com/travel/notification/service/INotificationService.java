@@ -1,11 +1,13 @@
 package com.travel.notification.service;
 
 import com.travel.notification.db.userdb.model.UserModel;
+import com.travel.notification.dto.NotificationBorrowerDto;
 import com.travel.notification.dto.NotificationCreateDto;
 import com.travel.notification.dto.NotificationUpdateDto;
 import com.travel.notification.db.notificationdb.model.NotificationModel;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +22,10 @@ public interface INotificationService {
     public void sendEmail(String toEmail, String subject, String body);
 
     public String contentBodyEmail(String username, String destination, Date startDate, Date endDate, Integer totalPerson, String totalPrice);
+
+    public String contentBodyEmailBorrower(String username, String totalPayment, String product, Timestamp date);
+
+    public NotificationModel createNotificationBorrower(NotificationBorrowerDto notificationBorrowerDto);
 
     public NotificationModel get(Integer id);
     public void save(NotificationModel notificationModel);
